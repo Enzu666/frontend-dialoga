@@ -1,0 +1,83 @@
+:root {
+    /* ---------- Primária (roxo) ---------- */
+    --cor-primaria: #7B4FA6;
+    --cor-primaria-escura: #5E3480;
+    --cor-primaria-transparente: #7B4FA600;
+    --cor-primaria-alfa-20: #7B4FA633;
+    --cor-primaria-alfa-22: #7B4FA638;
+  
+    /* ---------- Secundária (cinza-arroxeado) ---------- */
+    --cor-secundaria: #7C6B8A;
+    --cor-secundaria-alfa-50: #7C6B8A80;
+  
+    /* ---------- Texto ---------- */
+    --cor-texto: #2D1B45;
+    --cor-texto-alfa-50: #2D1B4580;
+    --cor-texto-preto: #000000;
+  
+    /* ---------- Fundos ---------- */
+    --cor-fundo: #FFFFFF;
+    --cor-fundo-login: #FDFCFF;
+    --cor-fundo-suave: #F5F0FF;
+    --cor-fundo-suave-2: #F8F5FF;
+    --cor-fundo-card: #F3EDF9;
+  
+    /* ---------- Bordas ---------- */
+    --cor-borda: #E8DFF0;
+    --cor-borda-forte: #DCCEED;
+  
+    /* ---------- Sucesso (verde) ---------- */
+    --cor-sucesso: #059669;
+    --cor-sucesso-fundo: #F0FDF4;
+    --cor-sucesso-borda: #B9F8CF;
+    --cor-sucesso-borda-suave: #DCFCE7;
+    --cor-sucesso-alfa-10: #0596691A;
+    --cor-sucesso-alfa-20: #05966933;
+    --cor-sucesso-alfa-30: #0596694D;
+  
+    /* ---------- Erro (vermelho) ---------- */
+    --cor-erro: #DC2626;
+    --cor-erro-fundo: #FEF2F2;
+    --cor-erro-fundo-2: #FEE8E7;
+    --cor-erro-borda: #FFC9C9;
+    --cor-erro-borda-2: #FDBBB9;
+    --cor-avatar-vermelho: #B84040;
+  
+    /* ---------- Alerta (âmbar) ---------- */
+    --cor-alerta: #D97706;
+    --cor-alerta-escura: #B45309;
+    --cor-alerta-fundo: #FFFBEB;
+    --cor-alerta-borda: #FEE685;
+    --cor-alerta-borda-suave: #FEF3C6;
+  
+    /* ---------- Informação (azul) ---------- */
+    --cor-info: #155DFC;
+    --cor-info-clara: #51A2FF;
+    --cor-info-fundo: #EFF6FF;
+  
+    /* ---------- Neutras ---------- */
+    --cor-cinza-50: #F9FAFB;
+    --cor-cinza-100: #F3F4F6;
+  
+    /* ---------- Branco e transparências ---------- */
+    --cor-branco: #FFFFFF;
+    --cor-transparente: #FFFFFF00;
+    --cor-branco-alfa-20: #FFFFFF33;
+    --cor-branco-alfa-40: #FFFFFF66;
+    --cor-branco-alfa-60: #FFFFFF99;
+    --cor-branco-alfa-70: #FFFFFFB2;
+    --cor-branco-alfa-80: #FFFFFFCC;
+    --cor-branco-alfa-90: #FFFFFFE5;
+  
+    /* ---------- Preto e sombras ---------- */
+    --cor-preto: #000000;
+    --cor-sombra: #0000001A;
+    --cor-sombra-media: #00000040;
+    --cor-sombra-forte: #00000080;
+    --cor-overlay: #2D1B454D;
+  
+    /* ---------- Gradiente (lavanda → rosa) ---------- */
+    --cor-gradiente-inicio: #DFCDE9;
+    --cor-gradiente-fim: #FBBCBD;
+    --gradiente-principal: linear-gradient(135deg, var(--cor-gradiente-inicio), var(--cor-gradiente-fim));
+  }

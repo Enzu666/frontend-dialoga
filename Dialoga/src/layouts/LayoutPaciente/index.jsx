@@ -1,15 +1,14 @@
-﻿import { Outlet } from 'react-router-dom'
+﻿import { NavLink, Outlet } from 'react-router-dom'
 
-function LayoutPaciente() {
+export default function LayoutPaciente() {
   return (
-    <div>
-      <aside>{/* sidebar */}</aside>
-      <main>
-        <Outlet />
-      </main>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <aside>
+        <NavLink to="/paciente/dashboard">Dashboard</NavLink>
+        <NavLink to="/paciente/agenda">Agenda</NavLink>
+        <NavLink to="/paciente/tarefas">Tarefas</NavLink>
+      </aside>
+      <main style={{ flex: 1 }}><Outlet /></main>
     </div>
   )
 }
-
-export default LayoutPaciente
-
