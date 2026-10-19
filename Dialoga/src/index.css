@@ -1,10 +1,30 @@
-/* Tira a margem padrão que o navegador coloca em volta da página */
-body {
-  margin: 0;
+/* ============================================================
+   index.css — estilos globais (valem para o site inteiro)
+   As cores ficam em styles/variebles.css
+   ============================================================ */
+@import './styles/variebles.css';
+
+:root {
+  --fonte: 'Nunito', system-ui, 'Segoe UI', Roboto, sans-serif; /* fonte carregada no index.html */
+  font-family: var(--fonte);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* O #root é a div onde o React desenha o app inteiro (está no index.html).
-   Fazemos ela ocupar a tela toda, sem largura fixa nem centralização. */
-#root {
-  min-height: 100vh;
-}
+/* width/height incluem padding e borda (facilita calcular tamanhos) */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body { margin: 0; }
+
+/* A aplicação ocupa a tela inteira */
+#root { min-height: 100svh; }
+
+h1, h2, h3, p { margin: 0; }
+
+a { color: inherit; }
+
+/* Botões e inputs herdam a fonte do site */
+button, input { font-family: inherit; }

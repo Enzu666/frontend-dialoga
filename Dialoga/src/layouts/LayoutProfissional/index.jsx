@@ -1,6 +1,16 @@
-﻿import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 function LayoutProfissional() {
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+
+  // apaga a sessão salva e volta para a tela de login
+  function sair() {
+    logout()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <div>
       <aside>
@@ -11,6 +21,7 @@ function LayoutProfissional() {
           <Link to="/profissional/tarefas">Tarefas</Link>
           <Link to="/profissional/notificacoes">Notificações</Link>
           <Link to="/profissional/perfil">Perfil</Link>
+          <button onClick={sair}>Sair</button>
         </nav>
       </aside>
       <main>

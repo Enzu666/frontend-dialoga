@@ -1,0 +1,38 @@
+/* Bloco do campo: label em cima, caixa embaixo */
+.campo { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+
+.campo__label { font-size: 11px; font-weight: 700; color: var(--cor-texto); }
+
+/* A "caixa" é quem tem a borda; o input fica transparente dentro dela */
+.campo__caixa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+/* Destaque roxo quando o input está focado */
+.campo__caixa:focus-within {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px var(--cor-primaria-alfa-20);
+}
+.campo__caixa--erro { border-color: var(--cor-erro); }
+
+.campo__icone { width: 16px; height: 16px; }
+
+.campo__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: 400 12px var(--fonte);
+  color: var(--cor-texto);
+}
+.campo__input::placeholder { color: var(--cor-texto-alfa-50); }
+
+.campo__erro { font-size: 11px; color: var(--cor-erro); }

@@ -1,0 +1,16 @@
+/* Duas colunas: hero (esquerda) e formulário (direita).
+   A largura do hero acompanha a ALTURA da tela, para ele ficar sempre
+   na proporção da ilustração (915 x 1024). Assim a imagem preenche o
+   painel sem cortar e sem sobras, em qualquer tamanho de janela.
+   Limites: o hero nunca passa de 62% nem fica abaixo de 50% da largura. */
+.pagina-login {
+  display: grid;
+  grid-template-columns: clamp(50%, calc(100svh * 0.8936), 62%) 1fr;
+  min-height: 100svh;
+}
+
+/* Telas menores (tablet/celular): esconde a ilustração e fica só o formulário */
+@media (max-width: 900px) {
+  .pagina-login { grid-template-columns: 1fr; }
+  .pagina-login > .hero-login { display: none; }
+}

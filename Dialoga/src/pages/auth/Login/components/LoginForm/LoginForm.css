@@ -1,0 +1,64 @@
+/* Painel: conteúdo centralizado e rodapé embaixo */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 24px;
+  background: var(--cor-fundo-login);
+}
+
+/* Coluna do formulário (largura máxima de 360px) */
+.form-login__conteudo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 360px;
+}
+.form-login__conteudo > .logo { margin: 0 auto; } /* logo centralizada */
+
+.form-login__cabecalho { text-align: center; }
+.form-login__titulo { font-size: 24px; font-weight: 800; color: var(--cor-texto); }
+.form-login__subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-secundaria); }
+
+.form-login__form { display: flex; flex-direction: column; gap: 14px; }
+
+/* Links roxos ("Esqueceu sua senha?" e "Cadastre-se") */
+.form-login__link { font-size: 11px; color: var(--cor-primaria); text-decoration: none; }
+.form-login__link:hover { text-decoration: underline; }
+.form-login__link--esquerda { align-self: flex-start; }
+.form-login__link--forte { font-weight: 700; }
+
+/* Botão do olho (sem estilo de botão, só o ícone) */
+.form-login__olho {
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.form-login__olho img { width: 16px; height: 16px; }
+
+/* Caixa vermelha de erro vindo da API */
+.form-login__erro {
+  padding: 10px 12px;
+  border: 1px solid var(--cor-erro-borda);
+  border-radius: 8px;
+  background: var(--cor-erro-fundo);
+  font-size: 12px;
+  color: var(--cor-erro);
+}
+
+.form-login__cadastro { text-align: center; font-size: 11px; color: var(--cor-secundaria); }
+
+.form-login__rodape {
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--cor-secundaria);
+}
+.form-login__rodape a { text-decoration: none; }
+.form-login__rodape a:hover { text-decoration: underline; }
