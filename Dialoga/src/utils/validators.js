@@ -24,3 +24,64 @@ export function validarLogin({ email, senha }) {
 
   return erros
 }
+
+// ---------- Cadastro ----------
+const MAX_NOME = 150
+const MIN_SENHA = 6
+
+// Deixa só os números de um texto
+const soNumeros = (texto) => texto.replace(/\D/g, '')
+
+// Máscara de celular: (11) 99999-9999
+export function mascararCelular(valor) {
+  const n = soNumeros(valor).slice(0, 11)
+  if (n.length <= 2) return n
+  if (n.length <= 6) return `(${n.slice(0, 2)}) ${n.slice(2)}`
+  if (n.length <= 10) return `(${n.slice(0, 2)}) ${n.slice(2, 6)}-${n.slice(6)}`
+  return `(${n.slice(0, 2)}) ${n.slice(2, 7)}-${n.slice(7)}`
+}
+
+// Máscara de CPF: 000.000.000-00
+export function mascararCpf(valor) {
+  const n = soNumeros(valor).slice(0, 11)
+  return n
+    .replace(/^(\d{3})(\d)/, '$1.$2')
+    .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1-$2')
+}
+
+export const limparCpf = soNumeros
+
+// Passo 1 do cadastro: tipo, nome, e-mail, celular (+ CPF e CRP se for profissional)
+export function validarCadastroDados({ tipo, nome, email, celular, cpf, crp }) {
+  const erros = {}
+
+  if (nome.trim().split(/\s+/).filter(Boolean).length < 2 || nome.length > MAX_NOME)
+    erros.nome = 'Informe seu nome completo.'
+
+  if (!email.trim()) erros.email = 'Informe seu e-mail.'
+  else if (!REGEX_EMAIL.test(email.trim()) || email.length > MAX_EMAIL) erros.email = 'E-mail inválido.'
+
+  const digitos = soNumeros(celular).length
+  if (digitos < 10 || digitos > 11) erros.celular = 'Informe um celular válido com DDD.'
+
+  if (tipo === 'profissional') {
+    if (soNumeros(cpf).length !== 11) erros.cpf = 'CPF deve ter 11 números.'
+    if (!crp.trim() || crp.length > 20) erros.crp = 'Informe seu CRP.'
+  }
+
+  return erros
+}
+
+// Passo 2 do cadastro: senha e confirmação
+export function validarCadastroSenha({ senha, confirmarSenha }) {
+  const erros = {}
+
+  if (senha.length < MIN_SENHA) erros.senha = `A senha deve ter pelo menos ${MIN_SENHA} caracteres.`
+  else if (senha.length > MAX_SENHA) erros.senha = `A senha deve ter no máximo ${MAX_SENHA} caracteres.`
+
+  if (!confirmarSenha) erros.confirmarSenha = 'Confirme sua senha.'
+  else if (confirmarSenha !== senha) erros.confirmarSenha = 'As senhas não coincidem.'
+
+  return erros
+}

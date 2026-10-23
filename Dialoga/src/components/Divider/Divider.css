@@ -1,4 +1,0 @@
-/* Linha - texto - linha, lado a lado */
-.divisor { display: flex; align-items: center; gap: 12px; }
-.divisor__linha { flex: 1; height: 1px; background: var(--cor-borda-forte); }
-.divisor__texto { font-size: 10px; color: var(--cor-secundaria); }

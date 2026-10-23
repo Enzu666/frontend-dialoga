@@ -1,30 +1,20 @@
 /* ============================================================
    index.css — estilos globais (valem para o site inteiro)
-   As cores ficam em styles/variebles.css
+   Tailwind v4: as cores/fonte ficam em styles/variebles.css (@theme)
    ============================================================ */
+@import 'tailwindcss';
 @import './styles/variebles.css';
 
-:root {
-  --fonte: 'Nunito', system-ui, 'Segoe UI', Roboto, sans-serif; /* fonte carregada no index.html */
-  font-family: var(--fonte);
-  color: var(--cor-texto);
-  background: var(--cor-fundo);
-  -webkit-font-smoothing: antialiased;
+/* Ajustes para manter o visual idêntico ao do CSS antigo
+   (o reset do Tailwind muda alguns padrões do navegador) */
+@layer base {
+  :root {
+    line-height: normal; /* o Tailwind usa 1.5; o site sempre usou o padrão do navegador */
+    color: var(--color-texto);
+    background: var(--color-fundo);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* o Tailwind deixa svg como block; aqui continua inline como antes */
+  svg { display: inline; vertical-align: baseline; }
 }
-
-/* width/height incluem padding e borda (facilita calcular tamanhos) */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-body { margin: 0; }
-
-/* A aplicação ocupa a tela inteira */
-#root { min-height: 100svh; }
-
-h1, h2, h3, p { margin: 0; }
-
-a { color: inherit; }
-
-/* Botões e inputs herdam a fonte do site */
-button, input { font-family: inherit; }

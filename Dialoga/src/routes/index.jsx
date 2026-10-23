@@ -3,11 +3,19 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 // Layouts
 import LayoutPaciente from '../layouts/LayoutPaciente'
 import LayoutProfissional from '../layouts/LayoutProfissional'
+import LayoutAdmin from '../layouts/LayoutAdmin'
+
+// Segurança
+import RequireAuth from './RequireAuth'
+import { NIVEL } from '../utils/rotasPorNivel'
 
 // Auth
 import Login from '../pages/auth/Login'
 import Cadastro from '../pages/auth/Cadastro'
 import PrimeiroAcesso from '../pages/auth/PrimeiroAcesso'
+
+// Admin
+import DashboardAdmin from '../pages/admin/Dashboard'
 
 // Paciente
 import AgendaPaciente from '../pages/paciente/Agenda'
@@ -37,28 +45,40 @@ function AppRoutes() {
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/primeiro-acesso" element={<PrimeiroAcesso />} />
 
-      {/* Paciente */}
-      <Route path="/paciente" element={<LayoutPaciente />}>
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<DashboardPaciente />} />
-        <Route path="agenda" element={<AgendaPaciente />} />
-        <Route path="tarefas" element={<TarefasPaciente />} />
-        <Route path="tratamentos" element={<TratamentosPaciente />} />
-        <Route path="profissionais" element={<ProfissionaisPaciente />} />
-        <Route path="relatorios" element={<RelatoriosPaciente />} />
-        <Route path="notificacoes" element={<NotificacoesPaciente />} />
-        <Route path="perfil" element={<PerfilPaciente />} />
+      {/* Administrador (nivel 0) */}
+      <Route element={<RequireAuth nivel={NIVEL.ADMIN} />}>
+        <Route path="/admin" element={<LayoutAdmin />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardAdmin />} />
+        </Route>
       </Route>
 
-      {/* Profissional */}
-      <Route path="/profissional" element={<LayoutProfissional />}>
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<DashboardProfissional />} />
-        <Route path="agenda" element={<AgendaProfissional />} />
-        <Route path="pacientes" element={<PacientesProfissional />} />
-        <Route path="tarefas" element={<TarefasProfissional />} />
-        <Route path="notificacoes" element={<NotificacoesProfissional />} />
-        <Route path="perfil" element={<PerfilProfissional />} />
+      {/* Profissional (nivel 1) */}
+      <Route element={<RequireAuth nivel={NIVEL.PROFISSIONAL} />}>
+        <Route path="/profissional" element={<LayoutProfissional />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardProfissional />} />
+          <Route path="agenda" element={<AgendaProfissional />} />
+          <Route path="pacientes" element={<PacientesProfissional />} />
+          <Route path="tarefas" element={<TarefasProfissional />} />
+          <Route path="notificacoes" element={<NotificacoesProfissional />} />
+          <Route path="perfil" element={<PerfilProfissional />} />
+        </Route>
+      </Route>
+
+      {/* Paciente (nivel 2) */}
+      <Route element={<RequireAuth nivel={NIVEL.PACIENTE} />}>
+        <Route path="/paciente" element={<LayoutPaciente />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardPaciente />} />
+          <Route path="agenda" element={<AgendaPaciente />} />
+          <Route path="tarefas" element={<TarefasPaciente />} />
+          <Route path="tratamentos" element={<TratamentosPaciente />} />
+          <Route path="profissionais" element={<ProfissionaisPaciente />} />
+          <Route path="relatorios" element={<RelatoriosPaciente />} />
+          <Route path="notificacoes" element={<NotificacoesPaciente />} />
+          <Route path="perfil" element={<PerfilPaciente />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<h1>404 - Página não encontrada</h1>} />

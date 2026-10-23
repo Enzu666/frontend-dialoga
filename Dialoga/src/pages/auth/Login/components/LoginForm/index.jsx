@@ -13,7 +13,6 @@ import { useLoginForm } from '../../../../../hooks/useLoginForm'
 import iconeEmail from '../../../../../assets/auth/icon_email.png'
 import iconeCadeado from '../../../../../assets/auth/icon_cadeado.png'
 import iconeOlho from '../../../../../assets/auth/icon_olho.png'
-import './LoginForm.css'
 
 export default function LoginForm() {
   const {
@@ -27,18 +26,18 @@ export default function LoginForm() {
   }
 
   return (
-    <section className="form-login">
-      <div className="form-login__conteudo">
-        <Logo altura={40} />
+    <section className="flex flex-col items-center justify-between py-8 px-6 bg-fundo-login">
+      <div className="flex-1 flex flex-col justify-center gap-[18px] w-full max-w-[360px]">
+        <Logo className="mx-auto" />
 
         {/* Títulos */}
-        <header className="form-login__cabecalho">
-          <h2 className="form-login__titulo">Bem-vindo de volta</h2>
-          <p className="form-login__subtitulo">Entre na sua conta para continuar</p>
+        <header className="text-center">
+          <h2 className="text-[24px] font-extrabold text-texto">Bem-vindo de volta</h2>
+          <p className="mt-1 text-[14px] text-secundaria">Entre na sua conta para continuar</p>
         </header>
 
         {/* Formulário (noValidate: a validação é feita por nós, não pelo navegador) */}
-        <form className="form-login__form" onSubmit={enviar} noValidate>
+        <form className="flex flex-col gap-3.5" onSubmit={enviar} noValidate>
           <TextField
             label="E-mail"
             type="email"
@@ -64,22 +63,22 @@ export default function LoginForm() {
             acao={
               <button
                 type="button"
-                className="form-login__olho"
+                className="flex p-0 border-0 bg-transparent cursor-pointer"
                 onClick={alternarSenha}
                 aria-label={mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'}
               >
                 {/* Olho mais "apagado" quando a senha está oculta */}
-                <img src={iconeOlho} alt="" style={{ opacity: mostrarSenha ? 1 : 0.6 }} />
+                <img className="w-4 h-4" src={iconeOlho} alt="" style={{ opacity: mostrarSenha ? 1 : 0.6 }} />
               </button>
             }
           />
 
-          <Link className="form-login__link form-login__link--esquerda" to="/recuperar-senha">
+          <Link className="text-[11px] text-primaria no-underline hover:underline self-start" to="/recuperar-senha">
             Esqueceu sua senha?
           </Link>
 
           {/* Erro vindo da API (ex.: senha incorreta, servidor fora do ar) */}
-          {erroGeral && <p className="form-login__erro" role="alert">{erroGeral}</p>}
+          {erroGeral && <p className="px-3 py-2.5 border border-erro-borda rounded-lg bg-erro-fundo text-[12px] text-erro" role="alert">{erroGeral}</p>}
 
           <Button type="submit" carregando={carregando}>
             {carregando ? 'Entrando...' : 'Entrar'}
@@ -89,16 +88,16 @@ export default function LoginForm() {
         <Divider texto="ou continue com" />
         <GoogleButton onClick={entrarComGoogle} disabled={carregando} />
 
-        <p className="form-login__cadastro">
-          Não tem conta? <Link className="form-login__link form-login__link--forte" to="/cadastro">Cadastre-se</Link>
+        <p className="text-center text-[11px] text-secundaria">
+          Não tem conta? <Link className="text-[11px] text-primaria no-underline hover:underline font-bold" to="/cadastro">Cadastre-se</Link>
         </p>
       </div>
 
       {/* Rodapé fixo na parte de baixo do painel */}
-      <footer className="form-login__rodape">
-        <a href="#termos">Termos de Uso</a>
+      <footer className="flex gap-2.5 text-[10px] text-secundaria">
+        <a className="no-underline hover:underline" href="#termos">Termos de Uso</a>
         <span aria-hidden="true">|</span>
-        <a href="#privacidade">Política de Privacidade</a>
+        <a className="no-underline hover:underline" href="#privacidade">Política de Privacidade</a>
       </footer>
     </section>
   )

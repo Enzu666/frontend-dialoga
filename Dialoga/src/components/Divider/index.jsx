@@ -3,14 +3,12 @@
 // Linha divisória com texto no meio (ex.: "ou continue com").
 // Prop: texto (opcional; sem texto vira só uma linha).
 // ============================================================
-import './Divider.css'
-
 export default function Divider({ texto }) {
   return (
-    <div className="divisor" role="separator">
-      <span className="divisor__linha" />
-      {texto && <span className="divisor__texto">{texto}</span>}
-      <span className="divisor__linha" />
+    <div className="flex items-center gap-3" role="separator">
+      <span className="flex-1 h-px bg-borda-forte" />
+      {texto && <span className="text-[10px] text-secundaria">{texto}</span>}
+      <span className="flex-1 h-px bg-borda-forte" />
     </div>
   )
 }
