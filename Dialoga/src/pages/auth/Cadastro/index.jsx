@@ -1,8 +1,8 @@
 // ============================================================
 // pages/auth/Cadastro
 // Tela de criação de conta em 2 passos:
-//   1) Seus dados  (tipo de conta, nome, e-mail, celular)
-//   2) Senha
+//   1) Seus dados  (tipo de conta, nome, e-mail, celular; profissional tem CPF, registro e especialidade)
+//   2) Senha  (componente components/DefinirSenha)
 // A lógica (validação, API) está em hooks/useCadastroForm.js
 // Se o usuário já estiver logado, vai direto para a área dele.
 // ============================================================
@@ -12,21 +12,13 @@ import { rotaInicialPorNivel } from '../../../utils/rotasPorNivel'
 import { useCadastroForm } from '../../../hooks/useCadastroForm'
 import TextField from '../../../components/TextField'
 import Button from '../../../components/Button'
+import DefinirSenha from './components/DefinirSenha'
 import iconeEmail from '../../../assets/auth/icon_email.png'
-import iconeCadeado from '../../../assets/auth/icon_cadeado.png'
-import iconeOlho from '../../../assets/auth/icon_olho.png'
 import iconeNome from '../../../assets/auth/IconNome.png'
 import iconeTelefone from '../../../assets/auth/IconTelefone.png'
-
-// Ícone de documento (CPF/CRP): ainda não existe png na pasta assets, então fica em SVG
-const props = {
-  width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#7C6B8A',
-  strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true,
-}
-const IconeDocumento = (
-  <svg {...props}><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z" /><path d="M14 3v6h6M8 13h8M8 17h5" /></svg>
-)
-
+import iconeCpf from '../../../assets/auth/iconCpf.png'
+import iconeRegistro from '../../../assets/auth/iconRegistroProfissional.png'
+import iconeEspecialidade from '../../../assets/auth/especialidade.png'
 
 const PASSOS = ['Seus dados', 'Senha']
 
@@ -99,6 +91,8 @@ export default function Cadastro() {
                   </div>
                 </div>
 
+                {/* Paciente: nome, e-mail, celular.
+                    Profissional: nome, CPF, registro, especialidade, e-mail, celular. */}
                 <TextField
                   label="Nome completo"
                   name="nome"
@@ -109,6 +103,37 @@ export default function Cadastro() {
                   onChange={(e) => f.alterarCampo('nome', e.target.value)}
                   erro={f.errosCampos.nome}
                 />
+
+                {ehProfissional && (
+                  <>
+                    <TextField
+                      label="CPF"
+                      name="cpf"
+                      inputMode="numeric"
+                      placeholder="Digite somente números"
+                      icone={iconeCpf}
+                      value={f.valores.cpf}
+                      onChange={(e) => f.alterarCampo('cpf', e.target.value)}
+                      erro={f.errosCampos.cpf}
+                    />
+                    <TextField
+                      label="Registro Profissional"
+                      name="crp"
+                      placeholder="Número e estado (sigla)"
+                      icone={iconeRegistro}
+                      value={f.valores.crp}
+                      onChange={(e) => f.alterarCampo('crp', e.target.value)}
+                      erro={f.errosCampos.crp}
+                    />
+                    {/* Só visual por enquanto: ainda não está ligado ao hook nem à API */}
+                    <TextField
+                      label="Especialidade"
+                      name="especialidade"
+                      placeholder="Área de atuação"
+                      icone={iconeEspecialidade}
+                    />
+                  </>
+                )}
 
                 <TextField
                   label="E-mail"
@@ -134,77 +159,21 @@ export default function Cadastro() {
                   erro={f.errosCampos.celular}
                 />
 
-                {/* O back exige CPF e CRP para profissionais */}
-                {ehProfissional && (
-                  <>
-                    <TextField
-                      label="CPF"
-                      name="cpf"
-                      inputMode="numeric"
-                      placeholder="000.000.000-00"
-                      icone={IconeDocumento}
-                      value={f.valores.cpf}
-                      onChange={(e) => f.alterarCampo('cpf', e.target.value)}
-                      erro={f.errosCampos.cpf}
-                    />
-                    <TextField
-                      label="CRP"
-                      name="crp"
-                      placeholder="06/123456"
-                      icone={IconeDocumento}
-                      value={f.valores.crp}
-                      onChange={(e) => f.alterarCampo('crp', e.target.value)}
-                      erro={f.errosCampos.crp}
-                    />
-                  </>
-                )}
-
                 <Button type="submit">Continuar</Button>
               </div>
             </form>
           ) : (
-            <form onSubmit={f.enviar} noValidate>
-              <h1 className="text-[20px] font-extrabold text-texto">Crie sua senha</h1>
-              <p className="mt-1 text-[13px] text-secundaria">Ela será usada para entrar na sua conta</p>
-
-              <div className="flex flex-col gap-4 mt-5">
-                {['senha', 'confirmarSenha'].map((campo) => (
-                  <TextField
-                    key={campo}
-                    label={campo === 'senha' ? 'Senha' : 'Confirmar senha'}
-                    type={f.mostrarSenha ? 'text' : 'password'}
-                    name={campo}
-                    autoComplete="new-password"
-                    placeholder="••••••••"
-                    icone={iconeCadeado}
-                    value={f.valores[campo]}
-                    onChange={(e) => f.alterarCampo(campo, e.target.value)}
-                    erro={f.errosCampos[campo]}
-                    acao={
-                      campo === 'senha' && (
-                        <button
-                          type="button"
-                          className="flex p-0 border-0 bg-transparent cursor-pointer"
-                          onClick={f.alternarSenha}
-                          aria-label={f.mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'}
-                        >
-                          <img className="w-4 h-4" src={iconeOlho} alt="" style={{ opacity: f.mostrarSenha ? 1 : 0.6 }} />
-                        </button>
-                      )
-                    }
-                  />
-                ))}
-
-                {f.erroGeral && <p className="px-3 py-2.5 border border-erro-borda rounded-lg bg-erro-fundo text-[12px] text-erro" role="alert">{f.erroGeral}</p>}
-
-                <Button type="submit" carregando={f.carregando}>
-                  {f.carregando ? 'Criando conta...' : 'Criar conta'}
-                </Button>
-                <Button type="button" variante="contorno" onClick={f.voltar} disabled={f.carregando}>
-                  Voltar
-                </Button>
-              </div>
-            </form>
+            <DefinirSenha
+              valores={f.valores}
+              errosCampos={f.errosCampos}
+              erroGeral={f.erroGeral}
+              carregando={f.carregando}
+              mostrarSenha={f.mostrarSenha}
+              onAlterarCampo={f.alterarCampo}
+              onAlternarSenha={f.alternarSenha}
+              onVoltar={f.voltar}
+              onSubmit={f.enviar}
+            />
           )}
         </section>
 

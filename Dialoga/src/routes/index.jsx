@@ -13,6 +13,7 @@ import { NIVEL } from '../utils/rotasPorNivel'
 import Login from '../pages/auth/Login'
 import Cadastro from '../pages/auth/Cadastro'
 import PrimeiroAcesso from '../pages/auth/PrimeiroAcesso'
+import PerfilEmAnalise from '../pages/auth/PerfilEmAnalise'
 
 // Admin
 import DashboardAdmin from '../pages/admin/Dashboard'
@@ -44,6 +45,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/primeiro-acesso" element={<PrimeiroAcesso />} />
+      <Route path="/perfil-em-analise" element={<PerfilEmAnalise />} />
 
       {/* Administrador (nivel 0) */}
       <Route element={<RequireAuth nivel={NIVEL.ADMIN} />}>

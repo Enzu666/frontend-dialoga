@@ -19,7 +19,7 @@ export default function TextField({ label, icone, acao, erro, ...inputProps }) {
 
       <div className={`flex items-center gap-2 h-10 px-3 bg-branco border rounded-lg transition-[border-color,box-shadow] duration-200 ease-[ease] focus-within:border-primaria focus-within:shadow-[0_0_0_3px_var(--color-primaria-alfa-20)] ${erro ? 'border-erro' : 'border-borda'}`}>
         {icone && (typeof icone === 'string'
-          ? <img className="w-4 h-4" src={icone} alt="" />
+          ? <img className="w-4 h-4 object-contain" src={icone} alt="" />
           : <span className="w-4 h-4">{icone}</span>)}
         <input
           id={id}

@@ -2,7 +2,7 @@
 // components/Button
 // Botão padrão do sistema, ocupa 100% da largura do container.
 // Props:
-//   variante   -> 'primario' (roxo preenchido) | 'contorno' (borda roxa)
+//   variante   -> 'primario' (roxo preenchido) | 'contorno' (borda roxa) | 'suave' (borda lilás clara)
 //   carregando -> true desabilita o botão (evita clique duplo)
 // Aceita também as props normais de <button> (type, onClick, ...).
 // ============================================================
@@ -21,6 +21,8 @@ const VARIANTES = {
   primario: 'bg-primaria border border-primaria text-branco enabled:hover:bg-primaria-escura',
   // fundo branco e borda roxa
   contorno: 'bg-branco border border-primaria text-texto enabled:hover:bg-fundo-suave-2',
+  // fundo branco e borda lilás clara (ex.: botão Voltar)
+  suave: 'bg-branco border border-borda-forte text-texto enabled:hover:bg-fundo-suave-2',
 }
 
 export default function Button({ variante = 'primario', carregando = false, children, ...props }) {
