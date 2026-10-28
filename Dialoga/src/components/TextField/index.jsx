@@ -6,12 +6,15 @@
 //   icone -> imagem (import de um .png/.svg) OU elemento React (ex.: <svg>) mostrado à esquerda
 //   acao  -> elemento à direita (ex.: botão de mostrar senha)
 //   erro  -> mensagem de erro (deixa a borda vermelha)
+//   ajuda -> texto de apoio abaixo do campo (opcional; texto ou elemento React)
 //   ...resto (type, value, onChange, placeholder...) vai direto no <input>
 // ============================================================
 import { useId } from 'react'
 
-export default function TextField({ label, icone, acao, erro, ...inputProps }) {
+export default function TextField({ label, icone, acao, erro, ajuda, ...inputProps }) {
   const id = useId() // id único que liga o label ao input
+  // ids dos textos que descrevem o campo (erro e/ou ajuda), para leitores de tela
+  const descricao = [erro && `${id}-erro`, ajuda && `${id}-ajuda`].filter(Boolean).join(' ') || undefined
 
   return (
     <div className="flex flex-col gap-1.5 text-left">
@@ -25,11 +28,13 @@ export default function TextField({ label, icone, acao, erro, ...inputProps }) {
           id={id}
           className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-[12px] font-normal leading-[normal] text-texto placeholder:text-texto-alfa-50"
           aria-invalid={!!erro}
-          aria-describedby={erro ? `${id}-erro` : undefined}
+          aria-describedby={descricao}
           {...inputProps}
         />
         {acao}
       </div>
+
+      {ajuda && <span id={`${id}-ajuda`} className="text-[10px] text-secundaria">{ajuda}</span>}
 
       {erro && <span id={`${id}-erro`} className="text-[11px] text-erro">{erro}</span>}
     </div>

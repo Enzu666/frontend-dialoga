@@ -15,6 +15,8 @@ import Cadastro from '../pages/auth/Cadastro'
 import PrimeiroAcesso from '../pages/auth/PrimeiroAcesso'
 import PerfilEmAnalise from '../pages/auth/PerfilEmAnalise'
 import RecuperarSenha from '../pages/auth/RecuperarSenha'
+import PersonalizarExperiencia from '../pages/auth/PersonalizarExperiencia'
+import BoasVindasProfissional from '../pages/auth/BoasVindasProfissional'
 
 // Admin
 import DashboardAdmin from '../pages/admin/Dashboard'
@@ -48,6 +50,7 @@ function AppRoutes() {
       <Route path="/primeiro-acesso" element={<PrimeiroAcesso />} />
       <Route path="/perfil-em-analise" element={<PerfilEmAnalise />} />
       <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+      <Route path="/boas-vindas-profissional" element={<BoasVindasProfissional />} />
 
       {/* Administrador (nivel 0) */}
       <Route element={<RequireAuth nivel={NIVEL.ADMIN} />}>
@@ -68,6 +71,11 @@ function AppRoutes() {
           <Route path="notificacoes" element={<NotificacoesProfissional />} />
           <Route path="perfil" element={<PerfilProfissional />} />
         </Route>
+      </Route>
+
+      {/* Primeiro acesso do paciente (logado, mas sem exigir o primeiro acesso concluído) */}
+      <Route element={<RequireAuth nivel={NIVEL.PACIENTE} exigirPrimeiroAcesso={false} />}>
+        <Route path="/personalizar-experiencia" element={<PersonalizarExperiencia />} />
       </Route>
 
       {/* Paciente (nivel 2) */}
