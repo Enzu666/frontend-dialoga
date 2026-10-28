@@ -1,11 +1,13 @@
 // ============================================================
 // InformarEmail (passo 1 da recuperação de senha)
-// Só layout: link "Voltar", título, campo de e-mail e botão.
+// Link "Voltar", título, campo de e-mail e botão.
 // Props:
-//   valor     -> texto do campo de e-mail
-//   erro      -> mensagem de erro do campo (opcional)
-//   onAlterar -> (texto) => void
-//   onSubmit  -> chamado ao enviar o formulário
+//   valor      -> texto do campo de e-mail
+//   erro       -> mensagem de erro do campo (opcional)
+//   erroGeral  -> erro vindo da API (opcional)
+//   carregando -> true enquanto a API responde
+//   onAlterar  -> (texto) => void
+//   onSubmit   -> chamado ao enviar o formulário
 // ============================================================
 import { Link } from 'react-router-dom'
 import TextField from '../../../../../components/TextField'
@@ -20,7 +22,14 @@ const SetaVoltar = (
   </svg>
 )
 
-export default function InformarEmail({ valor, erro, onAlterar, onSubmit }) {
+export default function InformarEmail({
+  valor,
+  erro,
+  erroGeral,
+  carregando = false,
+  onAlterar,
+  onSubmit,
+}) {
   return (
     <form onSubmit={onSubmit} noValidate>
       <Link className="inline-flex items-center gap-1 text-[11px] text-secundaria no-underline hover:underline" to="/login">
@@ -30,7 +39,7 @@ export default function InformarEmail({ valor, erro, onAlterar, onSubmit }) {
 
       <h1 className="mt-5 text-[20px] font-extrabold text-texto">Redefinir senha</h1>
       <p className="mt-1 text-[13px] text-secundaria">
-        Informe seu e-mail e enviaremos um link para redefinir sua senha.
+        Informe seu e-mail e enviaremos um código para redefinir sua senha.
       </p>
 
       <div className="flex flex-col gap-4 mt-5">
@@ -44,9 +53,19 @@ export default function InformarEmail({ valor, erro, onAlterar, onSubmit }) {
           value={valor}
           onChange={(e) => onAlterar(e.target.value)}
           erro={erro}
+          disabled={carregando}
         />
 
-        <Button type="submit">Enviar código</Button>
+        {/* erro vindo da API (ex.: e-mail não cadastrado) */}
+        {erroGeral && (
+          <p className="text-[12px] text-erro" role="alert">
+            {erroGeral}
+          </p>
+        )}
+
+        <Button type="submit" disabled={carregando}>
+          {carregando ? 'Enviando...' : 'Enviar código'}
+        </Button>
       </div>
     </form>
   )
