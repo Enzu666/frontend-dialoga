@@ -1,5 +1,5 @@
 // ============================================================
-// DefinirSenha (passo 2 do cadastro)
+// DefinirSenha (passo 2 do cadastro e passo 3 da recuperação de senha)
 // Só a parte visual: título, campos de senha e botões.
 // Tudo que é dado/ação chega por props, vindo do hook useCadastroForm
 // (a tela Cadastro só repassa: <DefinirSenha {...} />).
@@ -10,7 +10,10 @@
 //   carregando     -> true enquanto a conta está sendo criada
 //   mostrarSenha   -> alterna entre ocultar e mostrar a senha
 //   onAlterarCampo -> (campo, valor) => void
-//   onAlternarSenha, onVoltar, onSubmit
+//   onAlternarSenha, onSubmit
+//   onVoltar       -> (opcional) se não vier, o botão "Voltar" não aparece
+//   textoBotao     -> (opcional) texto do botão principal. Padrão: "Criar conta"
+//   textoCarregando-> (opcional) texto enquanto carrega. Padrão: "Criando conta..."
 // ============================================================
 import TextField from '../../../../../components/TextField'
 import Button from '../../../../../components/Button'
@@ -27,6 +30,8 @@ export default function DefinirSenha({
   onAlternarSenha,
   onVoltar,
   onSubmit,
+  textoBotao = 'Criar conta',
+  textoCarregando = 'Criando conta...',
 }) {
   return (
     <form onSubmit={onSubmit} noValidate>
@@ -74,13 +79,15 @@ export default function DefinirSenha({
           </p>
         )}
 
-        {/* Voltar e Criar conta lado a lado */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button type="button" variante="suave" onClick={onVoltar} disabled={carregando}>
-            Voltar
-          </Button>
+        {/* Voltar e botão principal lado a lado (sem onVoltar, o botão principal ocupa a linha toda) */}
+        <div className={`grid gap-3 ${onVoltar ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {onVoltar && (
+            <Button type="button" variante="suave" onClick={onVoltar} disabled={carregando}>
+              Voltar
+            </Button>
+          )}
           <Button type="submit" carregando={carregando}>
-            {carregando ? 'Criando conta...' : 'Criar conta'}
+            {carregando ? textoCarregando : textoBotao}
           </Button>
         </div>
       </div>

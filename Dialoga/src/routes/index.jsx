@@ -14,6 +14,7 @@ import Login from '../pages/auth/Login'
 import Cadastro from '../pages/auth/Cadastro'
 import PrimeiroAcesso from '../pages/auth/PrimeiroAcesso'
 import PerfilEmAnalise from '../pages/auth/PerfilEmAnalise'
+import RecuperarSenha from '../pages/auth/RecuperarSenha'
 
 // Admin
 import DashboardAdmin from '../pages/admin/Dashboard'
@@ -46,6 +47,7 @@ function AppRoutes() {
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/primeiro-acesso" element={<PrimeiroAcesso />} />
       <Route path="/perfil-em-analise" element={<PerfilEmAnalise />} />
+      <Route path="/recuperar-senha" element={<RecuperarSenha />} />
 
       {/* Administrador (nivel 0) */}
       <Route element={<RequireAuth nivel={NIVEL.ADMIN} />}>
