@@ -4,12 +4,14 @@
 //   <Route element={<RequireAuth nivel={NIVEL.PROFISSIONAL} />}> ... </Route>
 // - Deslogado            -> /login
 // - Logado, nível errado -> manda para a área do próprio nível
+// - Paciente em primeiro acesso -> /personalizar-experiencia (exigirPrimeiroAcesso={false} desliga isso)
 // ============================================================
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { rotaInicialPorNivel } from '../utils/rotasPorNivel'
+import { rotaInicialPorNivel, NIVEL, ROTA_PRIMEIRO_ACESSO } from '../utils/rotasPorNivel'
+import { primeiroAcessoConcluido } from '../utils/primeiroAcesso'
 
-export default function RequireAuth({ nivel }) {
+export default function RequireAuth({ nivel, exigirPrimeiroAcesso = true }) {
   const { auth } = useAuth()
 
   if (!auth) {
@@ -19,6 +21,11 @@ export default function RequireAuth({ nivel }) {
   if (auth.nivel !== nivel) {
     const propriaRota = rotaInicialPorNivel(auth.nivel)
     return <Navigate to={propriaRota ?? '/login'} replace />
+  }
+
+  // Paciente que ainda não respondeu as perguntas de primeiro acesso
+  if (exigirPrimeiroAcesso && auth.nivel === NIVEL.PACIENTE && !primeiroAcessoConcluido(auth.id)) {
+    return <Navigate to={ROTA_PRIMEIRO_ACESSO} replace />
   }
 
   return <Outlet />

@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { validarLogin } from '../utils/validators'
-import { rotaInicialPorNivel } from '../utils/rotasPorNivel'
+import { rotaInicialPorNivel, rotaAposLogin } from '../utils/rotasPorNivel'
 
 export function useLoginForm() {
   const { login, logout } = useAuth()
@@ -40,8 +40,8 @@ export function useLoginForm() {
     setCarregando(true)
     setErroGeral('')
     try {
-      const { nivel } = await login(valores.email.trim(), valores.senha)
-      const rota = rotaInicialPorNivel(nivel)
+      const dados = await login(valores.email.trim(), valores.senha)
+      const rota = rotaInicialPorNivel(dados.nivel) && rotaAposLogin(dados)
 
       // nível sem tela no front (ex.: admin): desloga e avisa
       if (!rota) {
